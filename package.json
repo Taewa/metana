@@ -1,0 +1,22 @@
+{
+  "name": "god-mode",
+  "version": "1.0.0",
+  "description": "ERC20 with god-mode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solidity"
+  ],
+  "author": "taehwa",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "ethers": "^5.7.0",
+    "hardhat": "^2.11.1"
+  }
+}

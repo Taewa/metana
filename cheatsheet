@@ -1,0 +1,5 @@
+// npx hardhat node  
+// npx hardhat run --network localhost scripts/deploy.js
+// npx hardhat console --network localhost 
+// npx hardhat run --network localhost scripts/index.js
+// const GM = await ethers.getContractFactory('GodMode'); const gm = await GM.attach('0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9')
