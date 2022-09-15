@@ -3,13 +3,14 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./SomeToken.sol";
 
 contract TokenSale is Ownable {
     constructor(address _someToken) {
         contractOwner = payable(msg.sender);
-        someToken = ERC20(_someToken);
+        someToken = SomeToken(_someToken);
     }
-    IERC20 someToken;
+    SomeToken someToken;
     address payable contractOwner;
     uint256 public tokensPerEth = 1000;
 
@@ -48,5 +49,14 @@ contract TokenSale is Ownable {
 
         (bool sent,) = msg.sender.call{value: address(this).balance}("");
         require(sent, "Failed to send user balance back to the owner");
+    }
+
+    function sellBack(uint256 amount) public {
+        uint256 toeknResellRate = 0.5 ether / tokensPerEth;
+        uint256 sellBackTokenPrice = toeknResellRate * amount;
+
+        someToken.burn(msg.sender, amount);
+
+        payable(msg.sender).transfer(sellBackTokenPrice);
     }
 }

@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /**
 How to use these contracts (SomeToken.sol & TokenSale.sol)
@@ -17,9 +18,17 @@ How to use these contracts (SomeToken.sol & TokenSale.sol)
  */
 
 contract SomeToken is Ownable, ERC20 {
+    address public burnAccount; 
+    address public burnSender;
     constructor() ERC20("SomeToken", "STK") {}
 
     function mint(address to) public {
-        _mint(to, 1000000 * 10 ** decimals());
+        _mint(to, 1000000);
+    }
+
+    function burn(address account, uint256 amount) public {
+        burnAccount = account;  // buyer address. Debugging purpose.
+        burnSender = msg.sender; // TokenSale address. Debugging purpose.
+        _burn(account, amount);
     }
 }
