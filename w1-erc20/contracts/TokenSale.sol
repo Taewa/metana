@@ -10,7 +10,7 @@ contract TokenSale is Ownable {
         contractOwner = payable(msg.sender);
         someToken = SomeToken(_someToken);
     }
-    SomeToken someToken;
+    SomeToken private someToken;
     address payable contractOwner;
     uint256 public tokensPerEth = 1000;
 
@@ -52,8 +52,8 @@ contract TokenSale is Ownable {
     }
 
     function sellBack(uint256 amount) public {
-        uint256 toeknResellRate = 0.5 ether / tokensPerEth;
-        uint256 sellBackTokenPrice = toeknResellRate * amount;
+        uint256 tokenResellRate = 0.5 ether / tokensPerEth;
+        uint256 sellBackTokenPrice = tokenResellRate * amount;
 
         someToken.burn(msg.sender, amount);
 
