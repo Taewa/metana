@@ -9,7 +9,7 @@ contract Sanctions is ERC20 {
         authority = msg.sender;
     }
 
-    address authority;
+    address private authority;
 
     mapping(address => bool) internal blacklist;
 
