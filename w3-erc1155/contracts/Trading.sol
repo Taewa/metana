@@ -29,6 +29,7 @@ contract Trading is ERC1155 {
         uint256 id;
         string name;
         bool isFree;
+        bool isTradable;
         uint256[] requirement;
     }
 
@@ -63,39 +64,52 @@ contract Trading is ERC1155 {
         _burnBatch(msg.sender, _tokenIds, amounts);
     }
 
+    function tradeToken(address _to, uint256 _tokenId) external {
+        require(PokemonList[_tokenId].isTradable, "Selected token is not tradable.");
+        
+        safeTransferFrom(msg.sender, _to, _tokenId, 1, "0x00");
+    }
+
     function cooldownMinting() internal {}
 
     function init() private {
         PokemonList[0].id = 0;
         PokemonList[0].name = 'SCIZOR';
         PokemonList[0].isFree = true;
+        PokemonList[0].isTradable = true;
         
         PokemonList[1].id = 1;
         PokemonList[1].name = 'LUCARIO';
         PokemonList[1].isFree = true;
+        PokemonList[1].isTradable = true;
         
         PokemonList[2].id = 2;
         PokemonList[2].name = 'MUDKIP';
         PokemonList[2].isFree = true;
+        PokemonList[2].isTradable = true;
 
         PokemonList[3].id = 3;
         PokemonList[3].name = 'PIKACHU';
         PokemonList[3].isFree = false;
+        PokemonList[3].isTradable = false;
         PokemonList[3].requirement = [0, 1];
         
         PokemonList[4].id = 4;
         PokemonList[4].name = 'SQUIRTLE';
         PokemonList[4].isFree = false;
+        PokemonList[4].isTradable = false;
         PokemonList[4].requirement = [1, 2];
         
         PokemonList[5].id = 5;
         PokemonList[5].name = 'UMBREON';
         PokemonList[5].isFree = false;
+        PokemonList[5].isTradable = false;
         PokemonList[5].requirement = [0, 2];
         
         PokemonList[6].id = 6;
         PokemonList[6].name = 'CHARIZARD';
         PokemonList[6].isFree = false;
+        PokemonList[6].isTradable = false;
         PokemonList[6].requirement = [0, 1, 2];
 
     }
