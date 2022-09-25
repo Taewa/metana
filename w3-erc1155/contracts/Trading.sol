@@ -24,6 +24,7 @@ You must use 2 separate contracts. One for the ERC1155 token, and one for the fo
  */
 contract Trading is ERC1155 {
     uint256 public constant TOKEN_AMOUNT = 100_000_000 * 10 **18;
+    uint8 public constant COOLDOWN_TIME = 60;
 
     struct Pokemon {
         uint256 id;
@@ -31,6 +32,7 @@ contract Trading is ERC1155 {
         bool isFree;
         bool isTradable;
         uint256[] requirement;
+        uint256 cooldown;
     }
 
     mapping (uint256 => Pokemon) public PokemonList;
@@ -41,6 +43,8 @@ contract Trading is ERC1155 {
     }
 
     function mint(uint256 _tokenId) public {
+        require(checkCooldownTime(_tokenId), "You must wait for cooltime for forging.");
+
         if(PokemonList[_tokenId].isFree) {
             _mint(msg.sender, _tokenId, 1, "");
         } else {
@@ -51,7 +55,8 @@ contract Trading is ERC1155 {
     function mintNonFreeToken(uint256 _tokenId) internal {
         uint256[] memory requirementTokens = PokemonList[_tokenId].requirement;
         uint256[] memory amounts = new uint256[](requirementTokens.length);
-     
+
+        // Q: Which one is better between for loop VS PokemonList[n].required = [1, 1] in terms of gas usage?
         for(uint i = 0; i < requirementTokens.length; i++) {
             amounts[i] = 1;
         }
@@ -70,7 +75,32 @@ contract Trading is ERC1155 {
         safeTransferFrom(msg.sender, _to, _tokenId, 1, "0x00");
     }
 
-    function cooldownMinting() internal {}
+    function _afterTokenTransfer(
+        address /* operator */,
+        address /* from */,
+        address /* to */,
+        uint256[] memory ids,
+        uint256[] memory /* amounts */,
+        bytes memory /* data */
+    ) internal override {
+        cooldownMinting(ids);
+    }
+
+    function cooldownMinting(uint256[] memory ids) private {
+        for(uint i = 0; i < ids.length; i++) {
+            PokemonList[ids[i]].cooldown = block.timestamp;
+        }
+    }
+
+    function checkCooldownTime(uint256 _id) private view returns(bool) {
+        uint256 cooldown = PokemonList[_id].cooldown;
+        
+        if(cooldown == 0) return true;
+
+        uint256 timePassed = block.timestamp - cooldown;
+
+        return timePassed > COOLDOWN_TIME;
+    }
 
     function init() private {
         PokemonList[0].id = 0;
