@@ -12,8 +12,8 @@ export default function Home() {
   const [trader, setTrader] = useState(null);
   const [token, setToken] = useState(null);
 
-  const contractAddress = '0x4A1D712Da0de672a0E128c71629e0792Aa4EccDC';
-  const traderAddress = '0x72cF17CA078296E677391e7Fb3A81Cb63bdD769c';
+  const contractAddress = '0xc4e7b0c9F71DB084Be7E2A73420bC20b7e8bB11c';
+  const traderAddress = '0x8760549b3DC5289C4dAf30B20aC90450D7Be9633';
 
   const connectWallet = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -54,10 +54,26 @@ export default function Home() {
 	}
 
   const getBalance = async () => {
-    const bal = await contract.balanceOf(defaultAccount, 3);
+    // const bal = await contract.balanceOf(defaultAccount, 3);
 
-    console.log('balanceOf!!', ethers.utils.formatUnits(bal, 0));
-    setToken(ethers.utils.formatUnits(bal, 0));
+    // console.log('balanceOf!!', ethers.utils.formatUnits(bal, 0));
+    // setToken(ethers.utils.formatUnits(bal, 0));
+
+    // const balance = await trader.getAccountBalance(defaultAccount);
+
+    // console.log('Balance!', balance);
+
+    // const x = await contract.balanceOfBatch([defaultAccount], [0]);
+
+    // console.log('xxxx!', ethers.utils.formatUnits(x[0], 0));
+
+    const balance = await trader.getAccountBalance(defaultAccount);
+
+    balance.forEach((bal, index) => {
+      console.log(index, ethers.utils.formatUnits(bal, 0));
+    })
+
+    // console.log('User balance', balance);
   }
 
   const mint0 = async() => {
@@ -85,7 +101,7 @@ export default function Home() {
         <h2>token {token}</h2>
         <button onClick={connectWallet}>Connect</button>
         <h3>Address: {defaultAccount}</h3>
-        <button onClick={getBalance}>Balance</button>
+        <button onClick={getBalance}>Get Balance</button>
         <button onClick={mint0}>Mint0</button>
         <button onClick={mint1}>Mint1</button>
         <button onClick={mint3}>Mint3</button>

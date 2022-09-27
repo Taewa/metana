@@ -22,6 +22,11 @@ Important if the website detects someone is not on the polygon network, it must 
 Important please use some styling on this website to make it look nice (bootstrap, tailwind CSS, etc). This is something you can show to future employers or business partners.
 You must use 2 separate contracts. One for the ERC1155 token, and one for the forging logic. The forging logic will need mint privileges.
  */
+
+/**
+Check how to connect Smart contract / Metamask / Polygon:
+https://www.quicknode.com/guides/smart-contract-development/how-to-deploy-a-smart-contract-on-maticpolygon
+*/
 contract PokemonToken is ERC1155 {
     uint8 public constant COOLDOWN_TIME = 60;
 
