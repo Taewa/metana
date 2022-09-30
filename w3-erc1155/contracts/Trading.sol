@@ -43,16 +43,4 @@ contract Trading is ERC1155Holder {
         
         pokemonToken.safeTransferFrom(msg.sender, _to, _tokenId, 1, "0x00");
     }
-
-    function getAccountBalance(address _target) external view returns (uint256[] memory) {
-        address[] memory addresses = new address[](7);
-        uint256[] memory ids = new uint256[](7);
-        
-        for(uint8 i = 0; i < 7; i++) {
-            addresses[i] = _target;
-            ids[i] = i;
-        }
-
-        return pokemonToken.balanceOfBatch(addresses, ids);
-    }
 }

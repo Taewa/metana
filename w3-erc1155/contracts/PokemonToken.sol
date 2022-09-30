@@ -49,6 +49,10 @@ contract PokemonToken is ERC1155 {
         _mint(_to, _tokenId, 1, "");
     }
 
+    function transfer(address _to, uint256 _tokenId) external {
+        _safeTransferFrom(msg.sender, _to, _tokenId, 1, "0x0");
+    }
+
     function burnBatch(address _from, uint256[] memory _tokenIds, uint256[] memory amounts) external {
         _burnBatch(_from, _tokenIds, amounts);
     }
