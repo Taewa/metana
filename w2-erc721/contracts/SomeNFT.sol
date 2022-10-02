@@ -15,8 +15,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // Open Ethersanc. You will see the minted token address
 // Go to https://testnets.opensea.io/ and paste the contract address
 
-// contract on Etherscan: https://rinkeby.etherscan.io/tx/0x2a55ec9ede7e34725f81f5cf2d089755d444d72a5dfdca47cd82f1a33d8edb68
-// 0.jpeg on Etherscan: https://rinkeby.etherscan.io/tx/0x90f3f415751d6b5237d8affa663570cedafb98c9f91b5416439f019afe830c68
+// contract on Etherscan: 
+// https://rinkeby.etherscan.io/tx/0x2a55ec9ede7e34725f81f5cf2d089755d444d72a5dfdca47cd82f1a33d8edb68
+// 0.jpeg on Etherscan: 
+// https://rinkeby.etherscan.io/tx/0x90f3f415751d6b5237d8affa663570cedafb98c9f91b5416439f019afe830c68
 
 // Go to the https://testnets.opensea.io/ and search with the contract address
 

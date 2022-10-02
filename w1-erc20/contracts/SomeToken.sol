@@ -36,7 +36,7 @@ contract SomeToken is Ownable, ERC20 {
         );
         burnAccount = account; // buyer address. Debugging purpose.
         burnSender = msg.sender; // TokenSale address. Debugging purpose.
-        _burn(account, amount); // Up to business decision. It can be transfer() if token should be returned to the owner.
+        _burn(account, amount); // Up to business decision. It can be transfer() if token must be returned to the owner.
     }
 
     function updateTokenSaleContract(address tokenSaleContractAddress)
