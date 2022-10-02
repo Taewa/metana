@@ -3,6 +3,7 @@ pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+
 // import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /**
@@ -18,23 +19,29 @@ How to use these contracts (SomeToken.sol & TokenSale.sol)
  */
 
 contract SomeToken is Ownable, ERC20 {
-    address public burnAccount; 
+    address public burnAccount;
     address public burnSender;
     address private tokenSaleContract;
+
     constructor() ERC20("SomeToken", "STK") {}
 
     function mint(address to) public {
-        _mint(to, 1_000_000 * 10 ** decimals());
+        _mint(to, 1_000_000 * 10**decimals());
     }
 
     function burn(address account, uint256 amount) external {
-        require(msg.sender == tokenSaleContract, "Only TokenSale contract can burn the token.");
-        burnAccount = account;  // buyer address. Debugging purpose.
+        require(
+            msg.sender == tokenSaleContract,
+            "Only TokenSale contract can burn the token."
+        );
+        burnAccount = account; // buyer address. Debugging purpose.
         burnSender = msg.sender; // TokenSale address. Debugging purpose.
         _burn(account, amount); // Up to business decision. It can be transfer() if token should be returned to the owner.
     }
 
-    function updateTokenSaleContract(address tokenSaleContractAddress) external {
+    function updateTokenSaleContract(address tokenSaleContractAddress)
+        external
+    {
         tokenSaleContract = tokenSaleContractAddress;
     }
 }
