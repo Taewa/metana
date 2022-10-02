@@ -10,13 +10,15 @@ contract TokenDealer {
     address contractOwner;
 
     constructor(address _myERC20Token) {
-       myErc20Token = MyERC20Token(_myERC20Token);
-       contractOwner = msg.sender;
+        myErc20Token = MyERC20Token(_myERC20Token);
+        contractOwner = msg.sender;
     }
 
     event Test(address sender, address receiver, uint256 tokenAmount);
 
-    function mintNFTByERC20(address _account, uint256 _erc20TokenAmount) external {
+    function mintNFTByERC20(address _account, uint256 _erc20TokenAmount)
+        external
+    {
         emit Test(_account, address(this), _erc20TokenAmount);
         myErc20Token.transferFrom(_account, address(this), _erc20TokenAmount);
     }
@@ -30,10 +32,10 @@ contract TokenDealer {
 
         require(tokens >= 1, "1 MET costs minimum 10**18.");
 
-        uint256 change = msg.value - tokens * 10 ** 18;
+        uint256 change = msg.value - tokens * 10**18;
 
-        myErc20Token.transferFrom(contractOwner, msg.sender, tokens * 10 ** 18);
-        
+        myErc20Token.transferFrom(contractOwner, msg.sender, tokens * 10**18);
+
         // return rest of ether.
         payable(msg.sender).transfer(change);
     }

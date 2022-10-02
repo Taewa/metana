@@ -3,6 +3,7 @@ pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+
 /**
 1. (ACC1) Deploy MyERC20Token.sol
 2. (ACC1) Mint to ACC2
@@ -16,9 +17,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 10. (ACC3) Mint on NFT contract 
 */
 contract MyERC20Token is ERC20, Ownable {
-    constructor() ERC20("MyERC20Token","MET") {}
+    constructor() ERC20("MyERC20Token", "MET") {}
 
     function mint(address _to) public onlyOwner {
-        _mint(_to, 100 * 10 ** decimals());
+        _mint(_to, 100 * 10**decimals());
     }
 }

@@ -14,10 +14,13 @@ contract Trading is ERC1155Holder {
     }
 
     function mint(uint256 _tokenId) public {
-        require(pokemonToken.checkCooldownTime(_tokenId), "You must wait for cooltime for forging.");
+        require(
+            pokemonToken.checkCooldownTime(_tokenId),
+            "You must wait for cooltime for forging."
+        );
         address to = msg.sender;
 
-        if(pokemonToken.getPokemonInfo(_tokenId).isFree) {
+        if (pokemonToken.getPokemonInfo(_tokenId).isFree) {
             pokemonToken.mint(to, _tokenId);
         } else {
             mintNonFreeToken(to, _tokenId);
@@ -25,12 +28,14 @@ contract Trading is ERC1155Holder {
     }
 
     function mintNonFreeToken(address _to, uint256 _tokenId) internal {
-        uint256[] memory requirementTokens = pokemonToken.getPokemonInfo(_tokenId).requirement;
+        uint256[] memory requirementTokens = pokemonToken
+            .getPokemonInfo(_tokenId)
+            .requirement;
         uint256[] memory amounts = new uint256[](requirementTokens.length);
         address from = msg.sender;
 
         // Q: Which one is better between for loop VS PokemonList[n].required = [1, 1] in terms of gas usage?
-        for(uint i = 0; i < requirementTokens.length; i++) {
+        for (uint256 i = 0; i < requirementTokens.length; i++) {
             amounts[i] = 1;
         }
 
@@ -39,8 +44,11 @@ contract Trading is ERC1155Holder {
     }
 
     function tradeToken(address _to, uint256 _tokenId) external {
-        require(pokemonToken.getPokemonInfo(_tokenId).isTradable, "Selected token is not tradable.");
-        
+        require(
+            pokemonToken.getPokemonInfo(_tokenId).isTradable,
+            "Selected token is not tradable."
+        );
+
         pokemonToken.safeTransferFrom(msg.sender, _to, _tokenId, 1, "0x00");
     }
 }

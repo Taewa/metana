@@ -7,13 +7,13 @@ import "./2-TokenDealer.sol";
 
 contract MyNFT is ERC721 {
     uint8 public currentTokenNumber;
-    uint8 constant public MAX_MINT = 100;
+    uint8 public constant MAX_MINT = 100;
 
     constructor() ERC721("MyNFT", "MN") {}
 
     function mint(uint8 _tokenId) external {
         require(MAX_MINT > currentTokenNumber, "Reached max mint number.");
-        
+
         _mint(msg.sender, _tokenId);
         currentTokenNumber++;
     }

@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./3-StakingERC20Reward.sol";
 import "./3-MyNFT.sol";
 
-
 contract StakingManager is IERC721Receiver {
     RewardERC20 public rewardERC20;
     IERC721 public myNFT;
@@ -51,7 +50,7 @@ contract StakingManager is IERC721Receiver {
         Stakes[_tokenId].time = block.timestamp;
     }
 
-    function checkReward(uint256 _tokenId) external view returns(uint256) {
+    function checkReward(uint256 _tokenId) external view returns (uint256) {
         uint256 stakedTime = Stakes[_tokenId].time;
         uint256 gainedERC20TokenAmount = getDepositPerDay(stakedTime);
 
@@ -59,17 +58,27 @@ contract StakingManager is IERC721Receiver {
     }
 
     function withdrawNFT(uint256 _tokenId) external {
-        require(Stakes[_tokenId].originalOwner == msg.sender, "Only the original owner can withdraw.");
+        require(
+            Stakes[_tokenId].originalOwner == msg.sender,
+            "Only the original owner can withdraw."
+        );
 
-        requestReward(_tokenId);    // Before withdraw, handle reward staking NFT to ERC20.
+        requestReward(_tokenId); // Before withdraw, handle reward staking NFT to ERC20.
 
         myNFT.safeTransferFrom(address(this), msg.sender, _tokenId);
 
         delete Stakes[_tokenId];
     }
 
-    function getDepositPerDay(uint256 _depoitTime) public view returns(uint256) {
-        require(_depoitTime != 0, "Wrong time. Probably the NFT is withdrawn or no staking.");
+    function getDepositPerDay(uint256 _depoitTime)
+        public
+        view
+        returns (uint256)
+    {
+        require(
+            _depoitTime != 0,
+            "Wrong time. Probably the NFT is withdrawn or no staking."
+        );
         // return (block.timestamp - _depoitTime) / 60 / 60 / 24;   // every 1 day
         return (block.timestamp - _depoitTime) / 5; // every 5 seconds
     }

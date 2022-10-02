@@ -18,10 +18,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 11. (ACC2) On StakingManger, run withdrawNFT() to unstake
 */
 contract RewardERC20 is ERC20, Ownable {
-    uint256 constant public MAX_MINT = 100 * 10 ** 18; // 100000000000000000000
+    uint256 public constant MAX_MINT = 100 * 10**18; // 100000000000000000000
     address private minter;
 
-    constructor() ERC20("RewardToken","RWT") {}
+    constructor() ERC20("RewardToken", "RWT") {}
 
     function mint(address _to, uint256 _amount) external {
         require(msg.sender == minter, "Only minter can mint ERC20 token.");
