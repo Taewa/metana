@@ -4,6 +4,7 @@ pragma solidity 0.8.17;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./SomeToken.sol";
+import "hardhat/console.sol";
 
 contract TokenSale is Ownable {
     constructor(address _someToken) {
@@ -12,7 +13,7 @@ contract TokenSale is Ownable {
     }
 
     SomeToken private someToken;
-    address payable contractOwner;
+    address payable public contractOwner;
     uint256 public tokensPerEth = 1000;
 
     event BuyTokens(address buyer, uint256 ethAmount, uint256 tokenAmount);
@@ -30,9 +31,6 @@ contract TokenSale is Ownable {
         require(msg.value >= 10**15, "1 TST costs minimum 10**15.");
 
         uint256 tokens = msg.value / 10**15;
-
-        require(tokens >= 1, "1 TST costs minimum 10**15.");
-
         uint256 change = msg.value - tokens * 10**15;
 
         // Q: I thought `msg.sender` is the one who call this contract with ether

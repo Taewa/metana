@@ -38,7 +38,7 @@ contract Sanctions is ERC20 {
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256 amount
+        uint256 /*amount*/
     ) internal virtual override {
         require(blacklist[from] == false, "You are now allowed to transer.");
         require(blacklist[to] == false, "You are now allowed to receive.");
