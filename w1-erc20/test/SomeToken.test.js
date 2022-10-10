@@ -1,3 +1,8 @@
+// For Vertigo installation in Mac,
+// Add: export PATH="/Users/LJ15PH/Library/Python/3.9/bin:$PATH" into .bash_profile or .zshrc
+// If there is yaml error, then run: pip install PyYAML
+// The current project structure doesn't work. Check the link:
+// https://github.com/JoranHonig/vertigo/issues/42
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
